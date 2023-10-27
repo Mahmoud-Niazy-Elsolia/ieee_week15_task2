@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-
 class CustomButton extends StatelessWidget {
 
   TextEditingController nameController = TextEditingController();

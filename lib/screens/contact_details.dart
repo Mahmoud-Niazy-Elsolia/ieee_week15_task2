@@ -124,11 +124,45 @@ class _ContactDetailsState extends State<ContactDetails> {
                 CustomTextButton(
                   color: Colors.blue,
                   label: 'DELETE',
-                  onPressed: () async{
-                   await SqfliteDb().deleteData(id: widget.contact.id);
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
-                      (route) => false,
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text(
+                          'Delete Contact',
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black45),
+                        ),
+                        content: const Text(
+                          'Are you sure you want to delete this contact',
+                          style: TextStyle(color: Colors.grey, fontSize: 18),
+                        ),
+                        actions: [
+                          CustomTextButton(
+                            onPressed: () async{
+                              await SqfliteDb().deleteData(
+                                id: widget.contact.id,
+                              );
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                                    (route) => false,
+                              );
+                            },
+                            label:'Delete',
+                            color: Colors.red,
+                          ),
+                          CustomTextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            label: 'cancel',
+                            color: Colors.grey,
+                          ),
+                        ],
+                      ),
                     );
                   },
                 )
